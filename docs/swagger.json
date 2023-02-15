@@ -1,0 +1,247 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "contact": {}
+    },
+    "paths": {
+        "/backups": {
+            "get": {
+                "description": "list backups",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "backup"
+                ],
+                "summary": "hatech kubernetes get backup",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.Backup"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/model.R"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "list backups",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "backup"
+                ],
+                "summary": "hatech kubernetes create backup",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.Backup"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/model.R"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "delete backups",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "backup"
+                ],
+                "summary": "hatech kubernetes delete backup",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.Backup"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/model.R"
+                        }
+                    }
+                }
+            }
+        },
+        "/backups/:uid": {
+            "put": {
+                "description": "update backups",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "backup"
+                ],
+                "summary": "hatech kubernetes update backup",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.Backup"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/model.R"
+                        }
+                    }
+                }
+            }
+        },
+        "/backups/delete": {
+            "post": {
+                "description": "backup delete backups",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "backup"
+                ],
+                "summary": "hatech kubernetes multi delete backup",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.Backup"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/model.R"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "model.BachupEtcdDetail": {
+            "type": "object",
+            "properties": {
+                "storage": {
+                    "type": "string"
+                }
+            }
+        },
+        "model.BachupImagesDetail": {
+            "type": "object",
+            "properties": {
+                "dst": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "src": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "model.Backup": {
+            "type": "object",
+            "properties": {
+                "spec": {
+                    "$ref": "#/definitions/model.BackupSpec"
+                },
+                "status": {
+                    "$ref": "#/definitions/model.BackupStatus"
+                },
+                "uid": {
+                    "type": "string"
+                }
+            }
+        },
+        "model.BackupSpec": {
+            "type": "object",
+            "properties": {
+                "backupEtcd": {
+                    "$ref": "#/definitions/model.BachupEtcdDetail"
+                },
+                "backupImage": {
+                    "$ref": "#/definitions/model.BachupImagesDetail"
+                },
+                "backupType": {
+                    "$ref": "#/definitions/model.BackupType"
+                },
+                "cron": {
+                    "type": "string"
+                }
+            }
+        },
+        "model.BackupStatus": {
+            "type": "object",
+            "properties": {
+                "finishedAt": {
+                    "type": "string"
+                },
+                "phase": {
+                    "type": "string"
+                },
+                "reason": {
+                    "type": "string"
+                },
+                "startedAt": {
+                    "type": "string"
+                }
+            }
+        },
+        "model.BackupType": {
+            "type": "string",
+            "enum": [
+                "image",
+                "etcd"
+            ],
+            "x-enum-varnames": [
+                "BackupType_Image",
+                "BackupType_Etcd"
+            ]
+        },
+        "model.R": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer"
+                },
+                "data": {},
+                "message": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}

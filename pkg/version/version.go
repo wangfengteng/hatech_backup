@@ -1,15 +1,9 @@
 package version
 
-import (
-	"fmt"
-	"os"
-)
-
 var (
-	Version = ""
+	Version = "v0.1"
 )
 
-func PrintVersion() {
-	fmt.Printf("version: %s\n", Version)
-	os.Exit(0)
+func PrintVersion() string {
+	return "version: " + Version
 }

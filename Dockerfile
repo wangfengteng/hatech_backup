@@ -16,8 +16,8 @@ FROM alpine:3.16
 WORKDIR /
 
 COPY --from=builder /go/src/github.com/hatech/backup/bin/app /hatech/
-COPY --from=builder /go/src/github.com/hatech/backup/config.yaml /hatech/config/
+COPY --from=builder /go/src/github.com/hatech/backup/cmd/server/config/config.yaml /hatech/
 
 
 VOLUME /opt/hyperkuber/helm/
-CMD ["/hk/app","-c","/hk/config/config.yaml"]
+CMD ["/hatech/app","-c","/hatech/config.yaml"]

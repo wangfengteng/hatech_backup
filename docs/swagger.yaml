@@ -1,0 +1,161 @@
+definitions:
+  model.BachupEtcdDetail:
+    properties:
+      storage:
+        type: string
+    type: object
+  model.BachupImagesDetail:
+    properties:
+      dst:
+        items:
+          type: string
+        type: array
+      src:
+        items:
+          type: string
+        type: array
+    type: object
+  model.Backup:
+    properties:
+      spec:
+        $ref: '#/definitions/model.BackupSpec'
+      status:
+        $ref: '#/definitions/model.BackupStatus'
+      uid:
+        type: string
+    type: object
+  model.BackupSpec:
+    properties:
+      backupEtcd:
+        $ref: '#/definitions/model.BachupEtcdDetail'
+      backupImage:
+        $ref: '#/definitions/model.BachupImagesDetail'
+      backupType:
+        $ref: '#/definitions/model.BackupType'
+      cron:
+        type: string
+    type: object
+  model.BackupStatus:
+    properties:
+      finishedAt:
+        type: string
+      phase:
+        type: string
+      reason:
+        type: string
+      startedAt:
+        type: string
+    type: object
+  model.BackupType:
+    enum:
+    - image
+    - etcd
+    type: string
+    x-enum-varnames:
+    - BackupType_Image
+    - BackupType_Etcd
+  model.R:
+    properties:
+      code:
+        type: integer
+      data: {}
+      message:
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /backups:
+    delete:
+      consumes:
+      - application/json
+      description: delete backups
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Backup'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.R'
+      summary: hatech kubernetes delete backup
+      tags:
+      - backup
+    get:
+      consumes:
+      - application/json
+      description: list backups
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Backup'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.R'
+      summary: hatech kubernetes get backup
+      tags:
+      - backup
+    post:
+      consumes:
+      - application/json
+      description: list backups
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Backup'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.R'
+      summary: hatech kubernetes create backup
+      tags:
+      - backup
+  /backups/:uid:
+    put:
+      consumes:
+      - application/json
+      description: update backups
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Backup'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.R'
+      summary: hatech kubernetes update backup
+      tags:
+      - backup
+  /backups/delete:
+    post:
+      consumes:
+      - application/json
+      description: backup delete backups
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Backup'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.R'
+      summary: hatech kubernetes multi delete backup
+      tags:
+      - backup
+swagger: "2.0"

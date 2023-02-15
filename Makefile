@@ -1,5 +1,6 @@
 VECHO = @
 ROOT := github.com/hatech/backup
+IMAGE_NAME := wangfengteng/hateach-k8s-backup
 VERSION ?= latest
 GOARCH ?= $(shell go env GOARCH)
 GOOS ?= $(shell go env GOOS)
@@ -17,7 +18,7 @@ fmt:
 	find pkg cmd -type f -name "*.go" | xargs gofmt -l -w
 
 doc:
-	swag init -g cmd/server/server.go -pd
+	swag init -g cmd/server/main.go -pd -q
 
 mod:
 	go mod tidy
@@ -35,7 +36,7 @@ server-compile: ##GOARCH=amd64 GOOS=linux
 image:
 	docker build \
 	--build-arg VERSION=$(VERSION) \
-	-t sheencloud/hyperkuber-server:$(IMAGE_VERSION) .
+	-t $(IMAGE_NAME):$(IMAGE_VERSION) .
 
 test:
 	go test -cover -gcflags=-l $(PKGS)
